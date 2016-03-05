@@ -45,8 +45,8 @@ class EbayItem < ApplicationRecord
   def as_json options={}
     {
       name: name,
-      bid_price: bid_price.to_f,
-      ends: ends_at.strftime("%d/%m/%y %H:%M:%S")
+      current_bid_price: bid_price.to_f,
+      ends: ends_at#.strftime("%d/%m/%y %H:%M:%S")
     }
   end
 
