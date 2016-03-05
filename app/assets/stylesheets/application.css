@@ -13,3 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
+.ebay-item {
+  margin-bottom: 1em;
+}
