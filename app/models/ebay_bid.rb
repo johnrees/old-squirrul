@@ -1,0 +1,23 @@
+class EbayBid < ApplicationRecord
+
+  belongs_to :user
+  belongs_to :ebay_item
+
+  register_currency :gbp
+  monetize :max_amount_cents
+
+  validates_presence_of :user, :ebay_item
+
+  def to_s
+    [max_amount, state]
+  end
+
+  def state
+    if max_amount >= ebay_item.min_bid_price
+      'valid'
+    else
+      "invalid - must be #{ebay_item.min_bid_price}"
+    end
+  end
+
+end

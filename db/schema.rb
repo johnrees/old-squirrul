@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160305203523) do
+ActiveRecord::Schema.define(version: 20160305210144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "ebay_bids", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "ebay_item_id",     limit: 8
+    t.integer  "max_amount_cents"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "ebay_bids", ["user_id", "ebay_item_id"], name: "index_ebay_bids_on_user_id_and_ebay_item_id", unique: true, using: :btree
 
   create_table "ebay_items", id: :bigserial, force: :cascade do |t|
     t.string   "name"
@@ -31,4 +41,6 @@ ActiveRecord::Schema.define(version: 20160305203523) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "ebay_bids", "ebay_items"
+  add_foreign_key "ebay_bids", "users"
 end

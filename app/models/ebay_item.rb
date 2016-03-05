@@ -4,6 +4,7 @@ class EbayItem < ApplicationRecord
 
   register_currency :gbp
   monetize :bid_price_cents
+  has_many :ebay_bids
 
   def to_s
     name
@@ -52,6 +53,29 @@ class EbayItem < ApplicationRecord
       current_bid_price: bid_price.to_f,
       ends: ends_at#.strftime("%d/%m/%y %H:%M:%S")
     }
+  end
+
+  def min_bid_price
+    EbayItem.increments.reverse.each do |increment|
+      if bid_price_cents/100.0 > (increment[0])
+        return Money.new(bid_price_cents + (increment[1] * 100), 'GBP')
+      end
+    end
+  end
+
+  def self.increments
+    [
+      [0.01,0.05],
+      [1.00,0.20],
+      [5.00,0.50],
+      [15.00,1.00],
+      [60.00,2.00],
+      [150.00,5.00],
+      [300.00,10.00],
+      [600.00,20.00],
+      [1500.00,50.00],
+      [3000.00,100.00]
+    ]
   end
 
 end
