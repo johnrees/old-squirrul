@@ -16,13 +16,12 @@ ActiveRecord::Schema.define(version: 20160305175445) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "ebay_items", force: :cascade do |t|
-    t.integer  "item_id"
+  create_table "ebay_items", id: :bigserial, force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "ends_at"
+    t.integer  "bid_price_cents"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
-
-  add_index "ebay_items", ["item_id"], name: "index_ebay_items_on_item_id", using: :btree
 
 end

@@ -1,11 +1,11 @@
 class CreateEbayItems < ActiveRecord::Migration[5.0]
   def change
     create_table :ebay_items do |t|
-      t.integer :item_id
       t.string :name
-
+      t.datetime :ends_at
+      t.integer :bid_price_cents
       t.timestamps
     end
-    add_index :ebay_items, :item_id
+    change_column :ebay_items, :id, :bigint
   end
 end
