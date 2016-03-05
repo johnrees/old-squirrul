@@ -1,3 +1,11 @@
-<% @ebay_items.each do |ebay_item| %>
-  <div class="ebay-item"><%= ebay_item.inspect %></div>
-<% end %>
+<table>
+  <tbody>
+    <% @ebay_items.each do |ebay_item| %>
+      <tr>
+        <td><%= link_to ebay_item, ebay_item.url %></td>
+        <td><%= time_ago_in_words(ebay_item.ends_at) %></td>
+        <td><%= ebay_item.bid_price %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -4,6 +4,10 @@ class EbayItem < ApplicationRecord
 
   register_currency :gbp
   monetize :bid_price_cents
+
+  def to_s
+    name
+  end
   
   def self.find_or_create_by_item_id _id
     find_or_create_by(id: _id)
