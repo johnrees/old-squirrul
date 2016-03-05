@@ -8,6 +8,8 @@ class EbayBid < ApplicationRecord
 
   validates_presence_of :user, :ebay_item
 
+  validate :check_amount_is_enough
+
   def to_s
     [max_amount, state]
   end
@@ -17,6 +19,15 @@ class EbayBid < ApplicationRecord
       'valid'
     else
       "invalid - must be #{ebay_item.min_bid_price}"
+    end
+  end
+
+private
+
+  def check_amount_is_enough
+    unless (max_amount || Money.new(0)) >= ebay_item.min_bid_price
+      errors[:amount] << "Must be greater than" \
+        " (#{ebay_item.min_bid_price})"
     end
   end
 

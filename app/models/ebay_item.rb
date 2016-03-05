@@ -9,7 +9,7 @@ class EbayItem < ApplicationRecord
   def to_s
     name
   end
-  
+
   def self.find_or_create_by_item_id _id
     find_or_create_by(id: _id)
   end
@@ -31,6 +31,10 @@ class EbayItem < ApplicationRecord
 
       if match = body.match(/"bidPrice":"([^"]+)"/)
         self.bid_price_cents = match[1].gsub(/\D/, '').to_i
+      end
+
+      if match = body.match(/"bids":(\d+)/)
+        self.number_of_bids = match[1].gsub(/\D/, '').to_i
       end
     rescue
       Rails.logger.info "ERROR FOR #{id}"
@@ -56,9 +60,13 @@ class EbayItem < ApplicationRecord
   end
 
   def min_bid_price
-    EbayItem.increments.reverse.each do |increment|
-      if bid_price_cents/100.0 > (increment[0])
-        return Money.new(bid_price_cents + (increment[1] * 100), 'GBP')
+    if number_of_bids == 0
+      return bid_price
+    else
+      EbayItem.increments.reverse.each do |increment|
+        if bid_price_cents/100.0 > (increment[0])
+          return Money.new(bid_price_cents + (increment[1] * 100), 'GBP')
+        end
       end
     end
   end
