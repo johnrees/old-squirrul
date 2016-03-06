@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'ebay_client'
 
 class EbayItem < ApplicationRecord
 
@@ -17,29 +18,14 @@ class EbayItem < ApplicationRecord
   def self.get _id
     item = find_or_initialize_by(id: _id)
     item.scrape!
-    item
+    return item
   end
 
   def scrape
-    body = open(url).read
-    begin
-      self.name = body.match(/property="og:title" content="([^"]+)"/)[1]
-      # self.name = body.match(/etafsharetitle="([^"]+)"/)[1]
-      if time = body.match(/"endTime":(\d+)/)
-        self.ends_at = Time.at(time[1].to_i/1000)
-      end
-
-      if match = body.match(/"bidPrice":"([^"]+)"/)
-        self.bid_price_cents = match[1].gsub(/\D/, '').to_i
-      end
-
-      if match = body.match(/"bids":(\d+)/)
-        self.number_of_bids = match[1].gsub(/\D/, '').to_i
-      end
-    rescue
-      Rails.logger.info "ERROR FOR #{id}"
-      File.write([Time.now.to_i, id, 'html'].join('.'), body)
-    end
+    response = EbayClient.new(url).scrape_auction
+    self.name = response[:name]
+    self.bid_price_cents = response[:bid_price_cents]
+    self.number_of_bids = response[:number_of_bids]
   end
 
   def scrape!
@@ -70,6 +56,8 @@ class EbayItem < ApplicationRecord
       end
     end
   end
+
+private
 
   def self.increments
     [
