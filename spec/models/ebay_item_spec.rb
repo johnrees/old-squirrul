@@ -2,9 +2,15 @@ require 'rails_helper'
 
 RSpec.describe EbayItem, :type => :model do
 
-  it "can be created by item_id" do
-    item = EbayItem.create(id: 123)
-    expect( EbayItem.find_or_create_by_item_id(123) ).to eq(item)
+  let(:ebay_item) { create(:ebay_item) }
+
+  # it "can be created by item_id" do
+  #   item = create(:ebay_item)
+  #   expect( EbayItem.find_or_create_by_item_id(123) ).to eq(item)
+  # end
+
+  it "is valid" do
+    expect(build_stubbed(:ebay_item)).to be_valid
   end
 
   it "can be found by item_id" do
@@ -12,15 +18,15 @@ RSpec.describe EbayItem, :type => :model do
   end
 
   skip "has currency" do
-    expect(EbayItem.new(bid_price: 2.99).currency).to eq("GBP")
+    expect(build_stubbed(:ebay_item).currency).to eq("GBP")
   end
 
   skip "has bid_price" do
-    expect(EbayItem.new(bid_price_cents: 344).bid_price).to eq(3.44)
+    expect(build_stubbed(:ebay_item, bid_price_cents: 344).bid_price).to eq(3.44)
   end
 
   skip "has bid_price_cents" do
-    expect(EbayItem.new(bid_price: 0.21).bid_price).to eq(21)
+    expect(build_stubbed(:ebay_item, bid_price: 0.21).bid_price).to eq(21)
   end
 
   it "pulls item from live site" do
@@ -31,8 +37,8 @@ RSpec.describe EbayItem, :type => :model do
   end
 
   it "has a url" do
-    item = EbayItem.new(id: 172123348938)
-    expect(item.url).to eq("http://www.ebay.co.uk/itm/172123348938")
+    item = build_stubbed(:ebay_item, id: 456)
+    expect(item.url).to eq("http://www.ebay.co.uk/itm/456")
   end
 
 end
