@@ -7,6 +7,8 @@ class EbayItem < ApplicationRecord
   monetize :bid_price_cents
   has_many :ebay_bids
 
+  scope :upcoming, -> { where('ends_at > ?', Time.now).order(ends_at: :asc) }
+
   def to_s
     name
   end
@@ -23,9 +25,9 @@ class EbayItem < ApplicationRecord
 
   def scrape
     response = EbayClient.new(url).scrape_auction
-    self.name = response[:name]
-    self.bid_price_cents = response[:bid_price_cents]
-    self.number_of_bids = response[:number_of_bids]
+    self.name = response[:name] if response[:name]
+    self.bid_price_cents = response[:bid_price_cents] if response[:bid_price_cents]
+    self.number_of_bids = response[:number_of_bids] if response[:number_of_bids]
   end
 
   def scrape!

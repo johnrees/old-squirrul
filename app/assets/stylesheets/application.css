@@ -17,3 +17,7 @@
 .ebay-item {
   margin-bottom: 1em;
 }
+
+th {
+  text-align: left;
+}
