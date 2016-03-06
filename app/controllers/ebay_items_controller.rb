@@ -4,7 +4,7 @@ class EbayItemsController < ApplicationController
 
   def index
     @ebay_items = EbayItem.upcoming
-    @ebay_bids = EbayBid.where(user: current_user)
+    @snipes = Snipe.where(user: current_user)
   end
 
 end

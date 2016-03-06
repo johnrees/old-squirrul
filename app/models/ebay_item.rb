@@ -5,7 +5,7 @@ class EbayItem < ApplicationRecord
 
   register_currency :gbp
   monetize :bid_price_cents
-  has_many :ebay_bids
+  has_many :snipes
 
   scope :upcoming, -> { where('ends_at > ?', Time.now).order(ends_at: :asc) }
 

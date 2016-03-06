@@ -15,7 +15,7 @@
         <td><%= ebay_item.ends_at %></td>
         <td><%= ebay_item.bid_price %></td>
         <td><%= ebay_item.min_bid_price %></td>
-        <td><%= @ebay_bids.where(ebay_item: ebay_item).try(:last) %></td>
+        <td><%= @snipes.where(ebay_item: ebay_item).try(:last) %></td>
       </tr>
     <% end %>
   </tbody>

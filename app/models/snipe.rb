@@ -1,4 +1,4 @@
-class EbayBid < ApplicationRecord
+class Snipe < ApplicationRecord
 
   belongs_to :user
   belongs_to :ebay_item

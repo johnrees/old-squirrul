@@ -11,20 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160305220716) do
+ActiveRecord::Schema.define(version: 20160306205913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "ebay_bids", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "ebay_item_id",     limit: 8
-    t.integer  "max_amount_cents"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-  end
-
-  add_index "ebay_bids", ["user_id", "ebay_item_id"], name: "index_ebay_bids_on_user_id_and_ebay_item_id", unique: true, using: :btree
 
   create_table "ebay_items", id: :bigserial, force: :cascade do |t|
     t.string   "name"
@@ -35,6 +25,16 @@ ActiveRecord::Schema.define(version: 20160305220716) do
     t.integer  "number_of_bids",  default: 0, null: false
   end
 
+  create_table "snipes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "ebay_item_id",     limit: 8
+    t.integer  "max_amount_cents"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "snipes", ["user_id", "ebay_item_id"], name: "index_snipes_on_user_id_and_ebay_item_id", unique: true, using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "username"
     t.string   "password_digest"
@@ -42,6 +42,6 @@ ActiveRecord::Schema.define(version: 20160305220716) do
     t.datetime "updated_at",      null: false
   end
 
-  add_foreign_key "ebay_bids", "ebay_items"
-  add_foreign_key "ebay_bids", "users"
+  add_foreign_key "snipes", "ebay_items"
+  add_foreign_key "snipes", "users"
 end
