@@ -3,7 +3,7 @@ class SnipesController < ApplicationController
   before_action :authorize
 
   def index
-    @snipes = current_user.snipes.includes(:ebay_item)
+    @snipes = current_user.snipes.upcoming
   end
 
   def new

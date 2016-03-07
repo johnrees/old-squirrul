@@ -10,6 +10,10 @@ class Snipe < ApplicationRecord
   validates_uniqueness_of :user, scope: :ebay_item
   validate :check_amount_is_enough
 
+  scope :upcoming, -> {
+    joins(:ebay_item).merge(EbayItem.upcoming).includes(:ebay_item)
+  }
+
   def to_s
     [max_amount, state]
   end
