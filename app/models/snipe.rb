@@ -20,7 +20,7 @@ class Snipe < ApplicationRecord
     elsif max_amount >= ebay_item.min_bid_price
       "valid"
     else
-      "invalid"
+      "too_low"
     end
   end
 
