@@ -40,7 +40,7 @@ class EbayItem < ApplicationRecord
     {
       name: name,
       current_bid_price: bid_price.to_f,
-      ends: ends_at#.strftime("%d/%m/%y %H:%M:%S")
+      ends: ends_at.to_s#.strftime("%d/%m/%y %H:%M:%S")
     }
   end
 
@@ -49,7 +49,7 @@ class EbayItem < ApplicationRecord
       return bid_price
     else
       EbayItem.increments.reverse.each do |increment|
-        if bid_price_cents/100.0 > (increment[0])
+        if bid_price_cents/100.0 >= (increment[0])
           return Money.new(bid_price_cents + (increment[1] * 100), 'GBP')
         end
       end
