@@ -14,6 +14,8 @@ RSpec.describe Snipe, :type => :model do
     expect(user.snipes).to eq([snipe])
   end
 
+  it "can be created for just watching an item"
+
   describe "states" do
     
     let(:ebay_item) { build_stubbed(:ebay_item, bid_price: 10) }
