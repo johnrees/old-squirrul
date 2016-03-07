@@ -15,7 +15,7 @@ class Snipe < ApplicationRecord
   end
 
   def state
-    if max_amount_cents == 0
+    if max_amount_cents.blank? or max_amount_cents == 0
       "watching"
     elsif max_amount >= ebay_item.min_bid_price
       "valid"
@@ -27,7 +27,7 @@ class Snipe < ApplicationRecord
 private
 
   def check_amount_is_enough
-    unless (max_amount || Money.new(0)) >= ebay_item.min_bid_price
+    if state != 'watching' and max_amount < ebay_item.min_bid_price
       errors[:amount] << "Must be greater than" \
         " (#{ebay_item.min_bid_price})"
     end
