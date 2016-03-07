@@ -26,6 +26,7 @@ class EbayItem < ApplicationRecord
   def scrape
     response = EbayClient.new(url).scrape_auction
     self.name = response[:name] if response[:name]
+    self.ends_at = response[:ends_at] if response[:ends_at]
     self.bid_price_cents = response[:bid_price_cents] if response[:bid_price_cents]
     self.number_of_bids = response[:number_of_bids] if response[:number_of_bids]
   end
