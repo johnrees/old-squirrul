@@ -1,6 +1,6 @@
 <p><%= @snipe.errors.messages %></p>
 
 <%= form_for @snipe do |f| %>
-  <%= f.text_field :max_amount %>
+  <%= f.text_field :max_amount, placeholder: "#{@snipe.ebay_item.min_bid_price} or more" %>
   <%= f.submit %>
 <% end %>
