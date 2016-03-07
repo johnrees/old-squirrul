@@ -4,9 +4,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if EbayClient.authenticate(params[:username], params[:password])
-      user = User.where(username: params[:username]).first
-    # if user && user.authenticate(params[:password])
+    if user = User.ebay_authenticate(params[:username], params[:password])
       session[:user_id] = user.id
       redirect_to root_url, notice: "Logged in!"
     else
