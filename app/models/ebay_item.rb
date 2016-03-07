@@ -13,10 +13,6 @@ class EbayItem < ApplicationRecord
     name
   end
 
-  def self.find_or_create_by_item_id _id
-    find_or_create_by(id: _id)
-  end
-
   def self.get _id
     item = find_or_initialize_by(id: _id)
     item.scrape!

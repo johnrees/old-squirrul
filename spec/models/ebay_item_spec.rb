@@ -13,8 +13,6 @@ RSpec.describe EbayItem, :type => :model do
     expect(build_stubbed(:ebay_item)).to be_valid
   end
 
-  it "can be found by item_id" do
-    expect( EbayItem.find_or_create_by_item_id(123).id ).to eq(123)
   end
 
   skip "has currency" do
