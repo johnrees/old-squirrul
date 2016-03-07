@@ -1,0 +1,6 @@
+<p><%= @snipe.errors.messages %></p>
+
+<%= form_for @snipe do |f| %>
+  <%= f.text_field :max_amount %>
+  <%= f.submit %>
+<% end %>

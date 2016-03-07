@@ -1,0 +1,28 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Ends</th>
+      <th>Current Price</th>
+      <th>Bids</th>
+      <th>Min Bid Required</th>
+      <th>My Snipe</th>
+      <th>State</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @snipes.each do |snipe| %>
+      <tr>
+        <td><%= link_to snipe.ebay_item, snipe.ebay_item.url %></td>
+        <td><%= snipe.ebay_item.ends_at %></td>
+        <td><%= snipe.ebay_item.bid_price %></td>
+        <td><%= snipe.ebay_item.number_of_bids %></td>
+        <td><%= snipe.ebay_item.min_bid_price %></td>
+        <td><%= snipe.max_amount %></td>
+        <th><%= link_to snipe.state, edit_snipe_path(snipe) %></th>
+        <th><%= link_to 'destroy', snipe, method: :delete %></th>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

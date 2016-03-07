@@ -7,7 +7,7 @@ class Snipe < ApplicationRecord
   monetize :max_amount_cents
 
   validates_presence_of :user, :ebay_item
-
+  validates_uniqueness_of :user, scope: :ebay_item
   validate :check_amount_is_enough
 
   def to_s
@@ -15,10 +15,12 @@ class Snipe < ApplicationRecord
   end
 
   def state
-    if max_amount >= ebay_item.min_bid_price
-      'valid'
+    if max_amount_cents == 0
+      "watching"
+    elsif max_amount >= ebay_item.min_bid_price
+      "valid"
     else
-      "invalid - must be #{ebay_item.min_bid_price}"
+      "invalid"
     end
   end
 
