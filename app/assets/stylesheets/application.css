@@ -10,6 +10,7 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= require normalize-rails
  *= require_tree .
  *= require_self
  */
@@ -20,4 +21,25 @@
 
 th {
   text-align: left;
+}
+
+td, th {
+  padding: 10px;
+}
+
+header {
+  text-align: right;
+}
+
+a {
+  text-decoration: none;
+  color: #3B99D2;
+}
+
+a[data-method=delete] {
+  color: #F92672;
+}
+
+body {
+  padding: 10px;
 }
