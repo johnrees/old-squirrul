@@ -30,8 +30,8 @@ RSpec.describe Snipe, :type => :model do
       expect(snipe.state).to eq('too_low')
     end
 
-    it "is 'watching' if amount is 0" do
-      snipe = build_stubbed(:snipe, ebay_item: ebay_item, max_amount: 0)
+    it "is 'watching' if amount is nil" do
+      snipe = build_stubbed(:snipe, ebay_item: ebay_item, max_amount: nil)
       expect(snipe.state).to eq('watching')
     end
 
