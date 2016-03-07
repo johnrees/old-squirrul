@@ -13,15 +13,15 @@
   </thead>
   <tbody>
     <% @snipes.each do |snipe| %>
-      <tr>
-        <td><%= link_to snipe.ebay_item, snipe.ebay_item.url %></td>
-        <td><%= snipe.ebay_item.ends_at %></td>
-        <td><%= snipe.ebay_item.bid_price %></td>
-        <td><%= snipe.ebay_item.number_of_bids %></td>
-        <td><%= snipe.ebay_item.min_bid_price %></td>
-        <td><%= snipe.max_amount %></td>
-        <th><%= link_to snipe.state, edit_snipe_path(snipe) %></th>
-        <th><%= link_to 'destroy', snipe, method: :delete %></th>
+      <tr id="ebay_item-<%= snipe.ebay_item.id %>">
+        <td class="id"><%= link_to snipe.ebay_item, snipe.ebay_item.url %></td>
+        <td class="ends_at"><%= snipe.ebay_item.ends_at %></td>
+        <td class="bid_price"><%= snipe.ebay_item.bid_price %></td>
+        <td class="number_of_bids"><%= snipe.ebay_item.number_of_bids %></td>
+        <td class="min_bid_price"><%= snipe.ebay_item.min_bid_price %></td>
+        <td class="max_amount"><%= snipe.max_amount %></td>
+        <th class="state"><%= link_to snipe.state, edit_snipe_path(snipe) %></th>
+        <th class="destroy'"><%= link_to 'destroy', snipe, method: :delete %></th>
       </tr>
     <% end %>
   </tbody>

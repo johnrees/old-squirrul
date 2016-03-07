@@ -30,6 +30,14 @@ class EbayItem < ApplicationRecord
   def scrape!
     scrape
     save!
+    MessageBus.publish "/items", {
+      id: id,
+      values: {
+        number_of_bids: number_of_bids,
+        bid_price: bid_price.to_f,
+        min_bid_price: min_bid_price.to_f
+      }
+    }
   end
 
   def url
