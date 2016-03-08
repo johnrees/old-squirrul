@@ -1,3 +1,3 @@
-require 'bcrypt'
+# require 'bcrypt'
 
-BCrypt::Engine::DEFAULT_COST = 12
+# BCrypt::Engine::DEFAULT_COST = 12
