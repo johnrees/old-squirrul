@@ -16,11 +16,9 @@ RSpec.describe User, :type => :model do
   end
 
   skip "can prepare a snipe" do
-    VCR.turned_off do
-      ebay_item = create(:ebay_item)
-      # expect(user.snipes).to receive(:create).with("an argument I want")
-      user.make_snipe(ebay_item, 100)
-    end
+    ebay_item = create(:ebay_item)
+    # expect(user.snipes).to receive(:create).with("an argument I want")
+    user.make_snipe(ebay_item, 100)
   end
 
 end
