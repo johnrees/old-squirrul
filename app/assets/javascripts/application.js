@@ -14,5 +14,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require message-bus
-//= require moment
+//= require countdown
 //= require_tree .

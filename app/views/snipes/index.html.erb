@@ -15,7 +15,7 @@
     <% @snipes.each do |snipe| %>
       <tr id="ebay_item-<%= snipe.ebay_item.id %>">
         <td class="id"><%= link_to snipe.ebay_item, snipe.ebay_item.url %></td>
-        <td class="ends_at"><%= snipe.ebay_item.ends_at %></td>
+        <td class="ends_at"><%= timeago snipe.ebay_item.ends_at %></td>
         <td class="bid_price"><%= snipe.ebay_item.bid_price %></td>
         <td class="number_of_bids"><%= snipe.ebay_item.number_of_bids %></td>
         <td class="min_bid_price"><%= snipe.ebay_item.min_bid_price %></td>
