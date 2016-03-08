@@ -11,7 +11,6 @@
  * It is generally better to create a new file per style scope.
  *
  *= require normalize-rails
- *= require_tree .
  *= require_self
  */
 
@@ -28,7 +27,16 @@ td, th {
 }
 
 header {
-  text-align: right;
+  margin-bottom: 2em;
+  overflow: hidden;
+}
+
+#user-info {
+  float: right;
+}
+
+form {
+  float: left;
 }
 
 a {
@@ -42,4 +50,12 @@ a[data-method=delete] {
 
 body {
   padding: 10px;
+}
+
+table {
+  width: 100%;
+}
+
+input {
+  padding: 6px;
 }
