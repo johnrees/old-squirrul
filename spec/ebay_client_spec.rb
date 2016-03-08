@@ -7,12 +7,11 @@ RSpec.describe EbayClient do
 
     it "can bid on an ebay item" do
       VCR.use_cassette("successful-bid-on-an-ebay-item") do
-        # user = EbayClient.authenticate('***REMOVED***','***REMOVED***!')
         user = EbayClient.authenticate('ENV[ebay_user]', 'ENV[ebay_pass]')
         ebay_item_id = 222046535563
         bid_amount = "2.00"
         expect(
-          EbayClient.bid!('***REMOVED***', user[:cookies], user[:useragent],
+          EbayClient.bid!('baysushi', user[:cookies], user[:useragent],
             ebay_item_id, bid_amount)
         ).to be_truthy
       end
