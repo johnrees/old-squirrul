@@ -6,17 +6,18 @@ class Snipe < ApplicationRecord
   register_currency :gbp
   monetize :max_amount_cents, allow_nil: true
 
-  validates_presence_of :user, :ebay_item
-  validates_uniqueness_of :user, scope: :ebay_item
+  validates_presence_of :user
+  validates_uniqueness_of :ebay_item, scope: :user
   validate :check_amount_is_enough
+
+  validate :ebay_item_xor_ebay_item_input
+
+  attr_accessor :ebay_item_input
+  before_validation :assign_ebay_item, if: :ebay_item_input
 
   scope :upcoming, -> {
     joins(:ebay_item).merge(EbayItem.upcoming).includes(:ebay_item)
   }
-
-  def to_s
-    [max_amount, state]
-  end
 
   def state
     if max_amount_cents.blank?
@@ -30,11 +31,22 @@ class Snipe < ApplicationRecord
 
 private
 
+  def ebay_item_xor_ebay_item_input
+    unless ebay_item.blank? ^ ebay_item_input.blank?
+      errors.add(:base, "Specify either an ebay_item or ebay_item_input, not both")
+    end
+  end
+
   def check_amount_is_enough
     if state != 'watching' and max_amount < ebay_item.min_bid_price
       errors[:amount] << "Must be greater than" \
         " (#{ebay_item.min_bid_price})"
     end
+  end
+
+  def assign_ebay_item
+    self.ebay_item = EbayItem.get(EbayItem.extract_id(ebay_item_input))
+    self.ebay_item_input = nil
   end
 
 end

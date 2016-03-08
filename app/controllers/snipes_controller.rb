@@ -4,6 +4,7 @@ class SnipesController < ApplicationController
 
   def index
     @snipes = current_user.snipes.upcoming.includes(:ebay_item)
+    @snipe = Snipe.new
   end
 
   def new
@@ -15,7 +16,8 @@ class SnipesController < ApplicationController
   end
 
   def create
-    if @snipe = current_user.make_snipe(snipe_params[:ebay_item_id], snipe_params[:max_amount])
+    @snipe = current_user.snipes.build(snipe_params)
+    if @snipe.save
       redirect_to snipes_path, notice: 'created'
     else
       render :new
@@ -40,7 +42,7 @@ class SnipesController < ApplicationController
 private
 
   def snipe_params
-    params.require(:snipe).permit(:max_amount, :ebay_item_id)
+    params.require(:snipe).permit(:max_amount, :ebay_item_input)
   end
 
 end

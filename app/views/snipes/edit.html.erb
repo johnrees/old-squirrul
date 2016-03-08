@@ -1,6 +1,12 @@
+<h1><%= @snipe.ebay_item.name %></h1>
+
+<p>Min price: <%= @snipe.ebay_item.min_bid_price.format %></p>
+
+<% if @snipe.errors.any? %>
 <p><%= @snipe.errors.messages %></p>
+<% end %>
 
 <%= form_for @snipe do |f| %>
-  <%= f.text_field :max_amount, placeholder: "#{@snipe.ebay_item.min_bid_price} or more" %>
+  <%= f.text_field :max_amount, placeholder: "#{@snipe.ebay_item.min_bid_price} or more", autofocus: true, autocomplete: 'off', type: 'number', step: 'any' %>
   <%= f.submit %>
 <% end %>

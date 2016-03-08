@@ -9,6 +9,11 @@ RSpec.describe EbayItem, :type => :model do
   #   expect( EbayItem.find_or_create_by_item_id(123) ).to eq(item)
   # end
 
+  it "extracts an ebay ID from a url" do
+    url = "http://www.ebay.co.uk/itm/Giant-200mm-Polystyrene-Cube-/301224088683?pt=UK_Crafts_Children_s_Crafts_EH&hash=item46225ad46b"
+    expect(EbayItem.extract_id(url)).to eq(301224088683)
+  end
+
   it "is valid" do
     expect(build_stubbed(:ebay_item)).to be_valid
   end

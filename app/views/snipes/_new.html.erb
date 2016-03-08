@@ -1,0 +1,4 @@
+<%= form_for Snipe.new do |f| %>
+  <%= f.text_field :ebay_item_input, placeholder: 'eBay URL or Item ID', autocomplete: 'off', autofocus: true %>
+  <%= f.submit %>
+<% end %>

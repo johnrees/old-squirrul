@@ -1,7 +1,8 @@
+<% if @snipe.errors.any? %>
 <p><%= @snipe.errors.messages %></p>
+<% end %>
 
 <%= form_for @snipe do |f| %>
-  <div class="input"><%= f.text_field :ebay_item_id %></div>
-  <div class="input"><%= f.text_field :max_amount %></div>
+  <div class="input"><%= f.text_field :ebay_item_input %></div>
   <%= f.submit %>
 <% end %>

@@ -19,6 +19,15 @@ class EbayItem < ApplicationRecord
   #   puts times
   # end
 
+  def self.extract_id _url
+    _url = _url.to_s
+    if match = _url.match(/(\d{12})/) #_url.match(/\D|\A(\d{12})\D|\z/)
+      match[0].to_i
+    else
+      false
+    end
+  end
+
   def to_s
     name
   end

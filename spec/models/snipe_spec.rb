@@ -14,6 +14,17 @@ RSpec.describe Snipe, :type => :model do
     expect(user.snipes).to eq([snipe])
   end
 
+  it "can be created with an ebay url" do
+    VCR.use_cassette("creating-snipe-with-url") do
+      url = "http://www.ebay.co.uk/itm/Boxed-Nintendo-Wii-Super-Mario"\
+            "-Galaxy-2-Game-With-Beginners-DVD-/391396734179?hash="\
+            "item5b211034e3:g:KtYAAOSwuAVW1aeQ"
+      expect(
+        create(:snipe, ebay_item_input: url, ebay_item: nil).ebay_item.id
+      ).to eq(391396734179)
+    end
+  end
+
   it "can be created for just watching an item"
 
   it "cannot be created, changed or removed within 30 seconds of closing"
