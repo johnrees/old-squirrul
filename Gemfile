@@ -63,5 +63,14 @@ group :development do
   gem 'quiet_assets'
 end
 
+# DEPLOYMENT
+group :development do
+  gem 'sshkit', '1.7.1'
+  gem 'sshkit-sudo'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano3-puma'
+end
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
