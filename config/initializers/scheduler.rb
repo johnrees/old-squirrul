@@ -11,22 +11,23 @@ times = [
   [1.hour, 20.minutes]
 ].reverse!
 
+ebay_items = EbayItem.upcoming.pluck("id,ends_at")
+
 scheduler.every '2s' do
   now = Time.now.to_i
-  ebay_items = EbayItem.upcoming.pluck("id,ends_at")
   ebay_items.each do |id,ends_at|
     time_left = (ends_at - now).to_i
-    str = "#{id} - #{time_left.to_s}"
     times.each do |limit, frequency|
       if time_left >= limit
         if time_left % frequency <= 1
+          str = "#{id} - #{time_left.to_s}"
           str += " #{Time.at(frequency).utc.strftime("%H:%M:%S")}"
+          puts str
           EbayItem.find(id).scrape!
         end
         break
       end
     end
-    puts str
   end
 end
 
