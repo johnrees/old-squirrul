@@ -53,6 +53,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 # set :keep_releases, 5
 
 set(:config_files, %w(
+  nginx.conf
 ))
 
 set(:executable_config_files, %w(
