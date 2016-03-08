@@ -1,4 +1,11 @@
 jQuery ->
+
+  $('form#add-item-form').on 'submit', ->
+    $('#snipe_ebay_item_input').val("")
+
+  $('#check_all_items').on 'change', ->
+    $('input[type=checkbox]').prop('checked', $(this).prop('checked'))
+
   updateTimes = ->
     $('.timeago').each ->
       time = Math.max((Date.parse($(this).attr('datetime')) - Date.now())/1000, 0) + 1

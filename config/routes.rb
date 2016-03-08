@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   # resources :users
   resources :sessions
   resources :ebay_items
-  resources :snipes
+  resources :snipes do
+    member do
+      get 'force_bid'
+    end
+  end
 
   root to: 'snipes#index'
 end

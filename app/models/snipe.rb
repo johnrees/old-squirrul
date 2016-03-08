@@ -29,6 +29,18 @@ class Snipe < ApplicationRecord
     end
   end
 
+  def bid!
+    raise "BID TOO HIGH?" if max_amount.to_f > 10
+    EbayClient.bid!(
+      user.username,
+      user.ebay_login_data['cookies'],
+      user.ebay_login_data['useragent'],
+      ebay_item_id,
+      max_amount.to_f
+    )
+    ebay_item.scrape!
+  end
+
 private
 
   def ebay_item_xor_ebay_item_input

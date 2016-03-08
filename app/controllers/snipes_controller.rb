@@ -39,6 +39,12 @@ class SnipesController < ApplicationController
     redirect_to snipes_path, notice: 'removed'
   end
 
+  def force_bid
+    @snipe = Snipe.find(params[:id])
+    @snipe.bid!
+    redirect_to snipes_path, notice: 'bid placed'
+  end
+
 private
 
   def snipe_params
