@@ -14,6 +14,14 @@ class SnipesController < ApplicationController
     @snipe = Snipe.find(params[:id])
   end
 
+  def create
+    if @snipe = current_user.make_snipe(snipe_params[:ebay_item_id], snipe_params[:max_amount])
+      redirect_to snipes_path, notice: 'created'
+    else
+      render :new
+    end
+  end
+
   def update
     @snipe = Snipe.find(params[:id])
     if @snipe.update_attributes(snipe_params)
@@ -32,7 +40,7 @@ class SnipesController < ApplicationController
 private
 
   def snipe_params
-    params.require(:snipe).permit(:max_amount)
+    params.require(:snipe).permit(:max_amount, :ebay_item_id)
   end
 
 end

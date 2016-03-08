@@ -1,1 +1,7 @@
-<h1>Add a Snipe</h1>
+<p><%= @snipe.errors.messages %></p>
+
+<%= form_for @snipe do |f| %>
+  <div class="input"><%= f.text_field :ebay_item_id %></div>
+  <div class="input"><%= f.text_field :max_amount %></div>
+  <%= f.submit %>
+<% end %>
