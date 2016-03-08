@@ -7,4 +7,4 @@ MessageBus.subscribe "/items", (data) ->
   console.log(data)
   row = $("#ebay_item-#{data.id}")
   for k,v of data.values
-    row.find(".#{k}").html(v)
+    row.find(".#{k}").text(v)

@@ -9,6 +9,16 @@ class EbayItem < ApplicationRecord
 
   scope :upcoming, -> { where('ends_at > ?', Time.now).order(ends_at: :asc) }
 
+  after_save :push, if: :number_of_bids_changed?
+
+  # def scrape_times
+  #   times = [604800]
+  #   while times.last > 2
+  #     times.push (times.last * 0.75).to_i
+  #   end
+  #   puts times
+  # end
+
   def to_s
     name
   end
@@ -30,14 +40,6 @@ class EbayItem < ApplicationRecord
   def scrape!
     scrape
     save!
-    MessageBus.publish "/items", {
-      id: id,
-      values: {
-        number_of_bids: number_of_bids,
-        bid_price: bid_price.to_f,
-        min_bid_price: min_bid_price.to_f
-      }
-    }
   end
 
   def url
@@ -79,6 +81,17 @@ private
       [1500.00,50.00],
       [3000.00,100.00]
     ]
+  end
+
+  def push
+    MessageBus.publish "/items", {
+      id: id,
+      values: {
+        number_of_bids: number_of_bids,
+        bid_price: bid_price.to_s,
+        min_bid_price: min_bid_price.to_s
+      }
+    }
   end
 
 end
