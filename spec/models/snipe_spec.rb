@@ -16,6 +16,8 @@ RSpec.describe Snipe, :type => :model do
 
   it "can be created for just watching an item"
 
+  it "cannot be created, changed or removed within 30 seconds of closing"
+
   describe "states" do
     
     let(:ebay_item) { build_stubbed(:ebay_item, bid_price: 10) }
