@@ -1,0 +1,61 @@
+@import "normalize-rails";
+
+.ebay-item {
+  margin-bottom: 1em;
+}
+
+#main {
+  width: 900px;
+  margin: 0 auto;
+}
+
+th {
+  text-align: left;
+}
+
+td, th {
+  padding: 10px;
+}
+
+header {
+  margin-bottom: 2em;
+  overflow: hidden;
+}
+
+#user-info {
+  float: right;
+}
+
+form {
+  float: left;
+}
+
+a {
+  text-decoration: none;
+  color: #3B99D2;
+}
+
+a[data-method=delete] {
+  color: #F92672;
+}
+
+body {
+  padding: 10px;
+  font-size: 14px;
+}
+
+table {
+  min-width: 100%;
+  /*border-collapse: collapse;*/
+  th,td {
+    border: 1px solid #ccc;
+  }
+}
+
+input {
+  padding: 6px;
+}
+
+th#table-header-name {
+  width: 200px;
+}
