@@ -17,9 +17,9 @@ set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rben
 
 # PUMA
 
-set :puma_workers, 1
+set :puma_workers, 2
 set :puma_init_active_record, true
-set :puma_preload_app, false
+set :puma_preload_app, true
 set :puma_conf, "#{shared_path}/config/puma.rb"
 
 # NGINX
