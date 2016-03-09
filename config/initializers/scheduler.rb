@@ -1,7 +1,5 @@
 require 'rufus-scheduler'
 
-scheduler = Rufus::Scheduler.new
-
 times = [
   [0, 2.seconds],
   [15.seconds, 5.seconds],
@@ -13,10 +11,11 @@ times = [
 
 ebay_items = EbayItem.upcoming.pluck("id,ends_at")
 
-scheduler.every '2s', lockfile: '.scheduler-lockfile' do
+Rails.logger.info $$
+
+Rufus::Scheduler.singleton.every '2s' do #, lockfile: '.scheduler-lockfile'
   now = Time.now.to_i
   Rails.logger.info now
-  Rails.logger.flush
   ebay_items.each do |id,ends_at|
     time_left = (ends_at - now).to_i
     times.each do |limit, frequency|
@@ -25,7 +24,6 @@ scheduler.every '2s', lockfile: '.scheduler-lockfile' do
           str = "#{id} - #{time_left.to_s}"
           str += " #{Time.at(frequency).utc.strftime("%H:%M:%S")}"
           Rails.logger.info str
-          Rails.logger.flush
           EbayItem.find(id).scrape!
         end
         break
