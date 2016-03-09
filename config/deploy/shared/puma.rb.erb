@@ -1,5 +1,7 @@
 #!/usr/bin/env puma
 
+require 'message_bus'
+
 directory '<%= current_path %>'
 rackup "<%=fetch(:puma_rackup)%>"
 environment '<%= fetch(:puma_env) %>'
@@ -37,5 +39,6 @@ on_worker_boot do
   ActiveSupport.on_load(:active_record) do
     ActiveRecord::Base.establish_connection
   end
+  MessageBus.after_fork
 end
 <% end %>
