@@ -69,7 +69,7 @@ group :development do
   gem 'sshkit-sudo'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
-  gem 'capistrano3-puma'
+  gem 'capistrano3-puma', github: 'seuros/capistrano-puma'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
