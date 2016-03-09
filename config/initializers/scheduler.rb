@@ -15,6 +15,7 @@ ebay_items = EbayItem.upcoming.pluck("id,ends_at")
 
 scheduler.every '2s', lockfile: '.scheduler-lockfile' do
   now = Time.now.to_i
+  Rails.logger.info now
   ebay_items.each do |id,ends_at|
     time_left = (ends_at - now).to_i
     times.each do |limit, frequency|
@@ -22,7 +23,7 @@ scheduler.every '2s', lockfile: '.scheduler-lockfile' do
         if time_left % frequency <= 1
           str = "#{id} - #{time_left.to_s}"
           str += " #{Time.at(frequency).utc.strftime("%H:%M:%S")}"
-          puts str
+          Rails.logger.info str
           EbayItem.find(id).scrape!
         end
         break
