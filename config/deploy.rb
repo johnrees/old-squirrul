@@ -19,6 +19,11 @@ set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rben
 
 set :puma_workers, 1
 set :puma_init_active_record, true
+set :puma_preload_app, false
+set :puma_conf, "#{shared_path}/config/puma.rb"
+
+# NGINX
+
 set :nginx_use_ssl, true
 set :nginx_server_name, 'squirrul.com'
 
