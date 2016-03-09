@@ -13,7 +13,7 @@ times = [
 
 ebay_items = EbayItem.upcoming.pluck("id,ends_at")
 
-scheduler.every '2s' do
+scheduler.every '2s', lockfile: '.scheduler-lockfile' do
   now = Time.now.to_i
   ebay_items.each do |id,ends_at|
     time_left = (ends_at - now).to_i
