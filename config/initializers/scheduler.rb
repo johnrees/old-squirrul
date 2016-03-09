@@ -1,5 +1,5 @@
 if $scheduler_thread
-
+  puts "++++++++++++++++++++++++++++++"
   require 'rufus-scheduler'
 
   Rails.logger.info "Created rufus scheduler"
@@ -16,7 +16,7 @@ if $scheduler_thread
 
   ebay_items = EbayItem.upcoming.pluck("id,ends_at")
 
-  scheduler.every '2s' do #, lockfile: '.scheduler-lockfile'
+  scheduler.every '2s' do
     now = Time.now.to_i
     Rails.logger.info now
     ebay_items.each do |id,ends_at|
