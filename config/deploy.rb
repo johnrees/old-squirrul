@@ -19,7 +19,7 @@ set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rben
 
 set :puma_workers, 2
 set :puma_init_active_record, true
-set :nginx_use_ssl, false
+set :nginx_use_ssl, true
 set :nginx_server_name, 'squirrul.com'
 
 # Default branch is :master
