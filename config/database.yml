@@ -80,6 +80,7 @@ test:
 #
 production:
   <<: *default
-  database: squirrul_production
-  username: squirrul
-  password: <%= ENV['SQUIRRUL_DATABASE_PASSWORD'] %>
+  database: squirrul_development
+  # database: squirrul_production
+  # username: squirrul
+  # password: <%= ENV['SQUIRRUL_DATABASE_PASSWORD'] %>
