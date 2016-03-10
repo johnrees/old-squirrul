@@ -6,11 +6,12 @@ namespace :sidekiq do
   end
   task :restart do
     on roles(:app) do
-      sudo "initctl restart sidekiq"
+      sudo "sudo restart sidekiq index=0"
     end
   end
 end
 
-after 'deploy:starting', 'sidekiq:quiet'
-after 'deploy:reverted', 'sidekiq:restart'
-after 'deploy:published', 'sidekiq:restart'
+# if any scheduling things have changed...
+#   after 'deploy:starting', 'sidekiq:quiet'
+#   after 'deploy:reverted', 'sidekiq:restart'
+#   after 'deploy:published', 'sidekiq:restart'
