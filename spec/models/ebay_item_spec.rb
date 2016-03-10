@@ -58,7 +58,7 @@ RSpec.describe EbayItem, :type => :model do
         name: 'test auction',
         bid_price: 2.99,
         ends_at: 1.day.from_now)
-      
+
       expect(ebay_item.to_json).to eq({
         name: 'test auction',
         current_bid_price: 2.99,
@@ -68,7 +68,7 @@ RSpec.describe EbayItem, :type => :model do
   end
 
   describe "min_bid_price" do
-    
+
     it "returns bid_price if no bids" do
       ebay_item = build_stubbed(:ebay_item, bid_price: 0.99, number_of_bids: 0)
       expect(ebay_item.min_bid_price.to_f).to eq(0.99)
