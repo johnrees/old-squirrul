@@ -1,11 +1,11 @@
 if $scheduler_thread
-  puts "++++++++++++++++++++++++++++++"
+
   require 'rufus-scheduler'
 
   Rails.logger.info "Created rufus scheduler"
   scheduler = Rufus::Scheduler.new
 
-  times = [
+  lite_scrape_times = [
     [0, 2.seconds],
     [15.seconds, 5.seconds],
     [1.minute, 30.seconds],
@@ -21,13 +21,13 @@ if $scheduler_thread
     Rails.logger.info now
     ebay_items.each do |id,ends_at|
       time_left = (ends_at - now).to_i
-      times.each do |limit, frequency|
+      lite_scrape_times.each do |limit, frequency|
         if time_left >= limit
           if time_left % frequency <= 1
             str = "#{id} - #{time_left.to_s}"
             str += " #{Time.at(frequency).utc.strftime("%H:%M:%S")}"
             Rails.logger.info str
-            EbayItem.find(id).scrape!
+            EbayItem.find(id).delay.scrape!
           end
           break
         end
