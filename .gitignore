@@ -19,3 +19,4 @@ spec/vcr_cassettes
 lib/ebay_client.rb
 *.html
 config/secrets.yml
+config/puma.rb
