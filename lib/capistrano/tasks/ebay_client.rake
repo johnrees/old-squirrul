@@ -1,9 +1,11 @@
-namespace :ebay_client do      
-  desc "Transfer ebay_client.rb"
+namespace :ebay_client do
+  desc "SCP transfer ebay_client"
   task :upload do
-    on roles(:all) do
-      upload! "lib/ebay_client.rb", "#{release_path}/lib/ebay_client.rb"
+    on roles(:app) do
+      upload! "lib/ebay_client.rb", "#{release_path}/lib/ebay_client.rb", via: :scp
+      upload! "lib/tasks/ebay.rake", "#{release_path}/lib/tasks/ebay.rake", via: :scp
     end
   end
 end
-before "deploy:symlink:shared", "ebay_client:upload"
+
+after "deploy:started", "ebay_client:upload"
