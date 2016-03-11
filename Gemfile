@@ -17,6 +17,7 @@ gem 'message_bus'
 gem 'sinatra', require: false, github: 'sinatra/sinatra'
 gem 'sidekiq'
 gem 'figaro'
+gem 'foreman'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

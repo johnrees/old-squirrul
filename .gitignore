@@ -17,6 +17,7 @@
 .byebug_history
 spec/vcr_cassettes
 lib/ebay_client.rb
+lib/tasks/ebay.rake
 *.html
 config/secrets.yml
 config/puma.rb
