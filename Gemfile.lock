@@ -97,6 +97,8 @@ GEM
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
     ffi (1.9.10)
+    figaro (1.1.1)
+      thor (~> 0.14)
     formatador (0.2.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
@@ -205,7 +207,7 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (11.0.1)
+    rake (11.1.0)
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
@@ -301,6 +303,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   daemons
   factory_girl_rails
+  figaro
   guard-rspec
   httparty
   jbuilder (~> 2.0)
@@ -313,6 +316,7 @@ DEPENDENCIES
   puma
   quiet_assets
   rails (>= 5.0.0.beta3, < 5.1)
+  rake
   rspec-rails
   sass-rails (~> 5.0)
   sidekiq

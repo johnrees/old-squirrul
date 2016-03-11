@@ -20,3 +20,6 @@ lib/ebay_client.rb
 *.html
 config/secrets.yml
 config/puma.rb
+
+# Ignore application configuration
+/config/application.yml
