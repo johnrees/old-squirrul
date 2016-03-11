@@ -60,6 +60,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 set(:config_files, %w(
   nginx.conf
   puma.rb
+  monit
 ))
 
 set(:executable_config_files, %w(
@@ -69,6 +70,10 @@ set(:symlinks, [
   {
     source: "nginx.conf",
     link: "/etc/nginx/sites-enabled/#{fetch(:full_app_name)}"
+  },
+  {
+    source: "monit",
+    link: "/etc/monit/conf.d/#{fetch(:full_app_name)}.conf"
   }
 ])
 
@@ -99,6 +104,8 @@ namespace :deploy do
   # reload nginx to it will pick up any modified vhosts from
   # setup_config
   after 'deploy:setup_config', 'nginx:reload'
+
+  after 'deploy:setup_config', 'monit:restart'
 
   # As of Capistrano 3.1, the `deploy:restart` task is not called
   # automatically.

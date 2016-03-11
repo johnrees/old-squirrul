@@ -1,0 +1,8 @@
+set httpd port <%= ENV.fetch('monit_http_port') %>
+  use address 0.0.0.0
+  allow 0.0.0.0/0.0.0.0
+  allow <%= ENV.fetch('monit_http_username') %>:<%= ENV.fetch('monit_http_password') %>
+
+<% application = fetch(:application) %>
+
+set mail-format { subject: <%= "#{fetch(:full_app_name)} - #{fetch(:rails_env)}" %> $SERVICE $EVENT at $DATE }
