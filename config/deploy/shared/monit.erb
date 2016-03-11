@@ -1,8 +1,65 @@
+set daemon 10
+
+set logfile /var/log/monit.log
+set idfile /var/lib/monit/id
+set statefile /var/lib/monit/state
+
+set alert ***REMOVED***
+
+set eventqueue
+  basedir /var/lib/monit/events
+  slots 100
+
+set mailserver ***REMOVED*** port 587
+  username "***REMOVED***" password "***REMOVED***"
+  using tlsv1
+  with timeout 30 seconds
+
 set httpd port <%= ENV.fetch('monit_http_port') %>
   use address 0.0.0.0
   allow 0.0.0.0/0.0.0.0
   allow <%= ENV.fetch('monit_http_username') %>:<%= ENV.fetch('monit_http_password') %>
 
-<% application = fetch(:application) %>
+set mail-format { subject: <%= "#{fetch(:application)} - #{fetch(:rails_env)}" %> $SERVICE $EVENT at $DATE }
 
-set mail-format { subject: <%= "#{fetch(:full_app_name)} - #{fetch(:rails_env)}" %> $SERVICE $EVENT at $DATE }
+# application
+check system squirrul
+  if loadavg(5min) > 2 for 2 cycles then alert
+  if memory > 75% for 2 cycles then alert
+  if cpu(user) > 75% for 2 cycles then alert
+
+# postgres
+check process postgresql with pidfile /var/run/postgresql/9.4-main.pid
+  start program = "/etc/init.d/postgresql start"
+  stop program = "/etc/init.d/postgresql stop"
+  if failed host localhost port 5432 protocol pgsql then restart
+  if 10 restarts within 10 cycles then timeout
+
+# nginx
+check process nginx with pidfile /var/run/nginx.pid
+  start program = "/etc/init.d/nginx start" # as uid "<%= fetch(:deploy_user) %>"
+  stop program = "/etc/init.d/nginx stop"
+  if children > 250 then restart
+  if mem is greater than 800.0 MB for 5 cycles then restart   # eating up memory?
+  if cpu is greater than 80% for 30 cycles then restarts      # hung process?
+  if 10 restarts within 10 cycles then timeout
+
+## puma
+#check process puma
+#  with pidfile <%= current_path %>/tmp/pids/puma.pid
+#
+## sidekiq
+#check process sidekiq
+#  with pidfile <%= current_path %>/tmp/pids/sidekiq.pid
+#  start program = "sudo start sidekiq index=0"
+#  stop program = "sudo stop sidekiq index=0"
+#  if mem is greater than 800.0 MB for 5 cycles then restart   # eating up memory?
+#  if cpu is greater than 80% for 30 cycles then restarts      # hung process?
+
+# redis
+check process redis with pidfile /var/run/redis_6379.pid
+  start program = "/etc/init.d/redis_6379 start"
+  stop program = "/etc/init.d/redis_6379 stop"
+  if mem is greater than 800.0 MB for 5 cycles then restart   # eating up memory?
+  if cpu is greater than 80% for 30 cycles then restarts      # hung process?
+  if 10 restarts within 10 cycles then timeout

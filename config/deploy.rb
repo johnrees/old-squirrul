@@ -104,8 +104,7 @@ namespace :deploy do
   # reload nginx to it will pick up any modified vhosts from
   # setup_config
   after 'deploy:setup_config', 'nginx:reload'
-
-  after 'deploy:setup_config', 'monit:restart'
+  after 'deploy:setup_config', 'monit:reload'
 
   # As of Capistrano 3.1, the `deploy:restart` task is not called
   # automatically.
