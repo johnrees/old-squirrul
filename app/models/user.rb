@@ -1,8 +1,12 @@
 class User < ApplicationRecord
-  
+
   has_secure_password
   validates_uniqueness_of :username
   has_many :snipes, dependent: :destroy
+
+  def to_s
+    username
+  end
 
   def make_snipe auction_id, max_amount = nil
     ebay_item = EbayItem.get(auction_id)

@@ -2,29 +2,37 @@
   <thead>
     <tr>
       <th><%= check_box_tag :check_all_items, 'all' %></th>
-      <th id="table-header-name">Name</th>
+      <th colspan="7"></th>
+<!--       <th id="table-header-name">Name</th>
       <th id="table-header-ends">Ends</th>
-      <th id="table-header-current-price">Current Price</th>
-      <th id="table-header-bids">Bids</th>
-      <th id="table-header-min-bid-required">Min Bid Required</th>
-      <th id="table-header-my-snipe">My Snipe</th>
-      <th id="table-header-state">State</th>
-      <th colspan="2"></th>
+      <th id="table-header-current-price">Current Price</th> -->
+<!--       <th id="table-header-bids">Bids</th>
+      <th id="table-header-min-bid-required">Snipe</th> -->
+      <!-- <th id="table-header-my-snipe">My Snipe</th> -->
+      <!-- <th id="table-header-state">State</th> -->
     </tr>
   </thead>
   <tbody>
     <% @snipes.each do |snipe| %>
-      <tr id="ebay_item-<%= snipe.ebay_item.id %>">
-        <td><%= check_box_tag :item, snipe.id %></td>
-        <td class="id"><%= link_to snipe.ebay_item, snipe.ebay_item.url %></td>
-        <td class="ends_at"><%= timeago snipe.ebay_item.ends_at %></td>
-        <td class="bid_price"><%= snipe.ebay_item.bid_price %></td>
-        <td class="number_of_bids"><%= snipe.ebay_item.number_of_bids %></td>
-        <td class="min_bid_price"><%= snipe.ebay_item.min_bid_price %></td>
-        <td class="max_amount"><%= snipe.max_amount %></td>
-        <th class="state"><%= link_to snipe.state, edit_snipe_path(snipe) %></th>
-        <th class="force_bid"><%= link_to 'bid', force_bid_snipe_path(snipe), data: { confirm: 'are you sure you want place your bid early on this item?' } %></th>
-        <th class="remove'"><%= link_to 'remove', snipe, method: :delete %></th>
+      <tr class="ebay_item-<%= snipe.ebay_item.id %>">
+        <td rowspan="2"><%= check_box_tag :item, snipe.id %></td>
+        <td rowspan="2"><div class="image" style="background-image: url('<%= snipe.ebay_item.img %>');"></div></td>
+        <td colspan="6" class="id"><%= link_to snipe.ebay_item, snipe.ebay_item.url, class: 'item-name' %></td>
+        <!-- <th class="state"><%= link_to snipe.state, edit_snipe_path(snipe) %></th> -->
+      </tr><tr class="ebay_item-<%= snipe.ebay_item.id %>">
+        <td class="ends_at" colspan="3"><%= timeago snipe.ebay_item.ends_at %></td>
+        <td class="number_of_bids"><%= snipe.ebay_item.number_of_bids %> Bid</td>
+
+        <td class="bid_price">
+          <%= snipe.ebay_item.bid_price %>
+          <span class="min_bid_price"><%= snipe.ebay_item.min_bid_price %></span>
+        </td>
+        <td class="max_amount">
+          <strong><%= snipe.max_amount %></strong>
+          <%= link_to snipe.state, edit_snipe_path(snipe) %> /
+          <%= link_to 'bid', force_bid_snipe_path(snipe), data: { confirm: 'are you sure you want place your bid early on this item?' } %> /
+          <%= link_to 'remove', snipe, method: :delete, class: 'remove' %>
+        </td>
       </tr>
     <% end %>
   </tbody>
