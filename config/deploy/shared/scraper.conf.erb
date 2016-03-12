@@ -1,0 +1,24 @@
+#!upstart
+description "Scraper"
+
+setuid <%= fetch(:deploy_user) %>
+setgid admin
+env HOME=/home/<%= fetch(:deploy_user) %>
+
+start on startup
+stop on shutdown
+
+# respawn <-- monit handles this
+
+script
+echo $$ > /home/<%= fetch(:deploy_user) %>/scraper.pid
+exec /bin/bash <<'EOT'
+  source /home/<%= fetch(:deploy_user) %>/.profile
+  cd <%= fetch(:current_path) %>
+  bundle exec ruby auction_scraper.rb
+EOT
+end script
+
+post-stop script
+  rm -f /home/<%= fetch(:deploy_user) %>/scraper.pid
+end script
