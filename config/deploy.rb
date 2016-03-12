@@ -2,7 +2,7 @@
 lock '3.4.0'
 
 set :application, 'squirrul'
-set :deploy_user, '***REMOVED***'
+set :deploy_user, ENV.fetch('deploy_user')
 set :repo_url, "git@gitlab.com:johnrees/#{fetch(:application)}.git"
 set :branch, "master"
 set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
@@ -61,6 +61,7 @@ set(:config_files, %w(
   nginx.conf
   puma.rb
   monit
+  scraper.conf
 ))
 
 set(:executable_config_files, %w(
@@ -74,6 +75,10 @@ set(:symlinks, [
   {
     source: "monit",
     link: "/etc/monit/conf.d/#{fetch(:full_app_name)}.conf"
+  },
+  {
+    source: "scraper.conf",
+    link: "/etc/init/scraper.conf"
   }
 ])
 

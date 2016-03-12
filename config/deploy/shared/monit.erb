@@ -29,7 +29,7 @@ check system squirrul
   if cpu(user) > 75% for 2 cycles then alert
 
 # scraper
-check process scraper with pidfile /home/***REMOVED***/scraper.pid
+check process scraper with pidfile /home/<%= fetch(:deploy_user) %>/scraper.pid
   if mem is greater than 500.0 MB for 5 cycles then restart   # eating up memory?
   if cpu is greater than 50% for 30 cycles then restart      # hung process?
   if 10 restarts within 10 cycles then timeout
