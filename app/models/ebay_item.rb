@@ -51,6 +51,13 @@ class EbayItem < ApplicationRecord
     save!
   end
 
+  def lite_scrape!
+    response = EbayClient.new.lite_scrape(id)
+    self.bid_price_cents = response[:bid_price_cents] if response[:bid_price_cents]
+    self.number_of_bids = response[:number_of_bids] if response[:number_of_bids]
+    save!
+  end
+
   def url
     "http://www.ebay.co.uk/itm/#{id}"
   end
