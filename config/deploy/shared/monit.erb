@@ -28,6 +28,12 @@ check system squirrul
   if memory > 75% for 2 cycles then alert
   if cpu(user) > 75% for 2 cycles then alert
 
+# scraper
+check process scraper with pidfile /home/***REMOVED***/scraper.pid
+  if mem is greater than 500.0 MB for 5 cycles then restart   # eating up memory?
+  if cpu is greater than 50% for 30 cycles then restart      # hung process?
+  if 10 restarts within 10 cycles then timeout
+
 # postgres
 check process postgresql with pidfile /var/run/postgresql/9.4-main.pid
   start program = "/etc/init.d/postgresql start"
@@ -41,7 +47,7 @@ check process nginx with pidfile /var/run/nginx.pid
   stop program = "/etc/init.d/nginx stop"
   if children > 250 then restart
   if mem is greater than 800.0 MB for 5 cycles then restart   # eating up memory?
-  if cpu is greater than 80% for 30 cycles then restarts      # hung process?
+  if cpu is greater than 80% for 30 cycles then restart      # hung process?
   if 10 restarts within 10 cycles then timeout
 
 ## puma
@@ -54,12 +60,12 @@ check process nginx with pidfile /var/run/nginx.pid
 #  start program = "sudo start sidekiq index=0"
 #  stop program = "sudo stop sidekiq index=0"
 #  if mem is greater than 800.0 MB for 5 cycles then restart   # eating up memory?
-#  if cpu is greater than 80% for 30 cycles then restarts      # hung process?
+#  if cpu is greater than 80% for 30 cycles then restart     # hung process?
 
 # redis
 check process redis with pidfile /var/run/redis_6379.pid
   start program = "/etc/init.d/redis_6379 start"
   stop program = "/etc/init.d/redis_6379 stop"
   if mem is greater than 800.0 MB for 5 cycles then restart   # eating up memory?
-  if cpu is greater than 80% for 30 cycles then restarts      # hung process?
+  if cpu is greater than 80% for 30 cycles then restart      # hung process?
   if 10 restarts within 10 cycles then timeout
