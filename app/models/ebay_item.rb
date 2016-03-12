@@ -20,7 +20,7 @@ class EbayItem < ApplicationRecord
   # end
 
   def state
-    ends_at > Time.now ? 'ended' : 'active'
+    Time.now < ends_at ? 'active' : 'ended'
   end
 
   def self.extract_id _url
