@@ -38,5 +38,5 @@ namespace :monit do
 
 end
 
-before 'deploy', "deploy:unmonitor_all"
-after 'deploy', 'deploy:monitor_all'
+before 'deploy', "monit:unmonitor_all"
+# after 'deploy', 'monit:monitor_all'

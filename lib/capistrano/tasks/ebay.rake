@@ -37,6 +37,6 @@ namespace :ebay do
 
 end
 
-after "deploy:started", "ebay:upload_libs"
+after "deploy:symlink:release", "ebay:upload_libs"
 #after "deploy:started", "ebay_client:scraper:replace"
 after "deploy:symlink:release", "ebay:scraper:symlink"
