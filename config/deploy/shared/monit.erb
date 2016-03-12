@@ -4,14 +4,14 @@ set logfile /var/log/monit.log
 set idfile /var/lib/monit/id
 set statefile /var/lib/monit/state
 
-set alert ***REMOVED***
+set alert <%= ENV.fetch('monit_email') %>
 
 set eventqueue
   basedir /var/lib/monit/events
   slots 100
 
-set mailserver ***REMOVED*** port 587
-  username "***REMOVED***" password "***REMOVED***"
+set mailserver <%= ENV.fetch('monit_email_server') %> port 587
+  username "<%= ENV.fetch('monit_email') %>" password "<%= ENV.fetch('monit_email_password') %>"
   using tlsv1
   with timeout 30 seconds
 
