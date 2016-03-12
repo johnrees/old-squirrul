@@ -1,0 +1,11 @@
+<table>
+  <% @ebay_items.each do |ebay_item| %>
+    <tr>
+      <td><%= link_to ebay_item.name, ebay_item.url %></td>
+      <td><%= ebay_item.ends_at %></td>
+      <td><%= ebay_item.number_of_bids %></td>
+      <td><%= ebay_item.bid_price %></td>
+      <td><%= ebay_item.state %></td>
+    </tr>
+  <% end %>
+</table>
