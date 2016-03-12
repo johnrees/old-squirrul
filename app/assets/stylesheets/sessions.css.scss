@@ -1,3 +1,12 @@
-body  {
-  font-family: Helvetica;
+@import "normalize-rails";
+
+input {
+  padding: 10px;
+  margin-bottom: 1em;
+}
+
+#main {
+  padding: 10px;
+  width: 200px;
+  margin: 30px auto;
 }

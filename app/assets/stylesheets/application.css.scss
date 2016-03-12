@@ -1,5 +1,15 @@
 @import "normalize-rails";
 
+.image {
+  width: 70px;
+  height: 70px;
+  display: block;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 5px;
+}
+
+
 .ebay-item {
   margin-bottom: 1em;
 }
@@ -52,10 +62,24 @@ table {
   }
 }
 
+th#table-header-name {
+  width: 200px;
+}
+
 input {
   padding: 6px;
 }
 
-th#table-header-name {
-  width: 200px;
+.min_bid_price {
+  color: #ccc;
+}
+
+footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #CCC;
+}
+
+a.item-name {
+  font-weight: bold;
 }
