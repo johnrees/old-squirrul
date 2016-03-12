@@ -1,0 +1,9 @@
+<table>
+<% @snipes.each do |snipe| %>
+  <tr>
+    <td><%= snipe.max_amount %></td>
+    <td><%= link_to snipe.user.username, admin_user_path(snipe.user) %></td>
+    <td><%= link_to snipe.ebay_item, admin_ebay_item_path(snipe.ebay_item) %></td>
+  </tr>
+<% end %>
+</table>

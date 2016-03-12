@@ -1,1 +1,21 @@
-<%= yield %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin :: Squirrul</title>
+    <%= csrf_meta_tags %>
+    <%= action_cable_meta_tag %>
+    <%= stylesheet_link_tag    'admin', media: 'all', 'data-turbolinks-track' => 'reload' %>
+  </head>
+  <body>
+    <header>
+      <ul>
+        <li><%= link_to "Ebay Items", admin_ebay_items_path %></li>
+        <li><%= link_to "Users", admin_users_path %></li>
+        <li><%= link_to "Snipes", admin_snipes_path %></li>
+
+        <li><%= link_to "Log Out", logout_path %></li>
+      </ul>
+    </header>
+    <div id="main" role="main"><%= yield %></div>
+  </body>
+</html>

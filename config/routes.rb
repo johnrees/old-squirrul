@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :ebay_items
+    resources :snipes
+    resources :users
     root to: 'ebay_items#index'
   end
 
