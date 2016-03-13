@@ -5,16 +5,17 @@ setuid <%= fetch(:deploy_user) %>
 setgid admin
 env HOME=/home/<%= fetch(:deploy_user) %>
 
-start on startup
-stop on shutdown
+start on (started puma)
+stop on runlevel [06]
 
 # respawn <-- monit handles this
 
 script
 echo $$ > /home/<%= fetch(:deploy_user) %>/scraper.pid
 exec /bin/bash <<'EOT'
+  # Logs out to /var/log/upstart/scraper.log by default
   source /home/<%= fetch(:deploy_user) %>/.profile
-  cd <%= fetch(:current_path) %>
+  cd <%= fetch(:deploy_to) %>/current
   bundle exec ruby auction_scraper.rb
 EOT
 end script

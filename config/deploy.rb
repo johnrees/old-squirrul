@@ -16,6 +16,7 @@ set :rbenv_ruby, '2.3.0'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 
 # PUMA
+set :sidekiq_instances, 1
 set :puma_threads, [5,5]
 set :puma_workers, 2
 set :puma_init_active_record, true
@@ -62,6 +63,9 @@ set(:config_files, %w(
   puma.rb
   monit
   scraper.conf
+  sidekiq.conf
+  workers.conf
+  puma.conf
 ))
 
 set(:executable_config_files, %w(
@@ -79,6 +83,18 @@ set(:symlinks, [
   {
     source: "scraper.conf",
     link: "/etc/init/scraper.conf"
+  },
+  {
+    source: "sidekiq.conf",
+    link: "/etc/init/sidekiq.conf"
+  },
+  {
+    source: "workers.conf",
+    link: "/etc/init/workers.conf"
+  },
+  {
+    source: "puma.conf",
+    link: "/etc/init/puma.conf"
   }
 ])
 
