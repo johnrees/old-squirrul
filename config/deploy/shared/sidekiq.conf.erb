@@ -26,6 +26,6 @@ exec /bin/bash <<'EOT'
   # Logs out to /var/log/upstart/sidekiq.log by default
   source /home/<%= fetch(:deploy_user) %>/.profile
   cd <%= fetch(:deploy_to) %>/current
-  exec bundle exec sidekiq -i ${index} -e production
+  exec bundle exec sidekiq -i ${index} -e production -C config/sidekiq.yml
 EOT
 end script
