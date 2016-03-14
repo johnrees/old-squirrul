@@ -1,10 +1,10 @@
-set daemon 10
+set daemon 10 # check every 10 seconds
 
 set logfile /var/log/monit.log
 set idfile /var/lib/monit/id
 set statefile /var/lib/monit/state
 
-set alert <%= ENV.fetch('monit_email') %>
+set alert <%= ENV.fetch('monit_email') %> only on { timeout, nonexist }
 
 set eventqueue
   basedir /var/lib/monit/events
@@ -50,17 +50,21 @@ check process nginx with pidfile /var/run/nginx.pid
   if cpu is greater than 80% for 30 cycles then restart      # hung process?
   if 10 restarts within 10 cycles then timeout
 
-## puma
-#check process puma
-#  with pidfile <%= current_path %>/tmp/pids/puma.pid
-#
-## sidekiq
-#check process sidekiq
-#  with pidfile <%= current_path %>/tmp/pids/sidekiq.pid
-#  start program = "sudo start sidekiq index=0"
-#  stop program = "sudo stop sidekiq index=0"
-#  if mem is greater than 800.0 MB for 5 cycles then restart   # eating up memory?
-#  if cpu is greater than 80% for 30 cycles then restart     # hung process?
+# puma
+check process puma
+  with pidfile <%= current_path %>/tmp/pids/puma.pid
+  if children > 250 then restart
+  if mem is greater than 800.0 MB for 5 cycles then restart   # eating up memory?
+  if cpu is greater than 80% for 30 cycles then restart      # hung process?
+  if 10 restarts within 10 cycles then timeout
+
+# sidekiq
+check process sidekiq
+  with pidfile <%= current_path %>/tmp/pids/sidekiq.pid
+  start program = "/sbin/start workers"
+  stop program = "/sbin/stop workers"
+  if mem is greater than 800.0 MB for 5 cycles then restart   # eating up memory?
+  if cpu is greater than 80% for 30 cycles then restart     # hung process?
 
 # redis
 check process redis with pidfile /var/run/redis_6379.pid
