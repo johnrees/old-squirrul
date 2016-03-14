@@ -1,18 +1,17 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :application, 'squirrul'
+set :application, ENV.fetch('application')
 set :deploy_user, ENV.fetch('deploy_user')
-set :repo_url, "git@gitlab.com:johnrees/#{fetch(:application)}.git"
-set :branch, "master"
+set :repo_url, "git@#{ENV.fetch('repo_domain')}:#{ENV.fetch('repo_owner')}/#{fetch(:application)}.git"
+set :branch, ENV.fetch('repo_branch') { 'master' }
 set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
 set :deploy_to, "/home/#{fetch(:deploy_user)}/apps/#{fetch(:full_app_name)}"
 
 # RBENV
-
 set :rbenv_path, "/home/#{fetch(:deploy_user)}/.rbenv"
 set :rbenv_type, :system
-set :rbenv_ruby, '2.3.0'
+set :rbenv_ruby, ENV.fetch('ruby_version') { '2.3.0' }
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 
 # PUMA
@@ -26,7 +25,7 @@ set :puma_conf, "#{shared_path}/config/puma.rb"
 # NGINX
 
 set :nginx_use_ssl, true
-set :nginx_server_name, 'squirrul.com'
+set :nginx_server_name, ENV.fetch('url')
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -59,9 +58,9 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 # set :keep_releases, 5
 
 set(:config_files, %w(
-  nginx.conf
   puma.rb
-  monit
+  monit.conf
+  nginx.conf
   scraper.conf
   sidekiq.conf
   workers.conf
@@ -69,6 +68,12 @@ set(:config_files, %w(
 ))
 
 set(:executable_config_files, %w(
+  monit.conf
+  nginx.conf
+  scraper.conf
+  sidekiq.conf
+  workers.conf
+  puma.conf
 ))
 
 set(:symlinks, [
@@ -77,7 +82,7 @@ set(:symlinks, [
     link: "/etc/nginx/sites-enabled/#{fetch(:full_app_name)}"
   },
   {
-    source: "monit",
+    source: "monit.conf",
     link: "/etc/monit/conf.d/#{fetch(:full_app_name)}.conf"
   },
   {
