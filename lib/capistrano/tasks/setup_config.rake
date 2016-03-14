@@ -28,6 +28,8 @@ namespace :deploy do
       symlinks.each do |symlink|
         sudo "ln -nfs #{shared_path}/config/#{symlink[:source]} #{sub_strings(symlink[:link])}"
       end
+
+      sudo "initctl reload-configuration"
     end
   end
 end
